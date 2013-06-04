@@ -1,0 +1,5 @@
+config BR2_PACKAGE_POWERPC_UTILS
+	bool "powerpc-utils"
+	select BR2_PACKAGE_ZLIB
+	help
+	  System utilities for powerpc machines
