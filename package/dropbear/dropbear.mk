@@ -8,14 +8,19 @@ DROPBEAR_VERSION = 2014.63
 DROPBEAR_SITE = http://matt.ucc.asn.au/dropbear/releases
 DROPBEAR_SOURCE = dropbear-$(DROPBEAR_VERSION).tar.bz2
 DROPBEAR_TARGET_BINS = dbclient dropbearkey dropbearconvert scp ssh
+DROPBEAR_MAKE_PROGRAMS = $(filter-out ssh, $(DROPBEAR_TARGET_BINS))
 DROPBEAR_MAKE =	$(MAKE) MULTI=1 SCPPROGRESS=1 \
-		PROGRAMS="dropbear dbclient dropbearkey dropbearconvert scp"
+		PROGRAMS="$(DROPBEAR_MAKE_PROGRAMS)"
 
 DROPBEAR_LICENSE = MIT, BSD-2c-like, BSD-2c
 DROPBEAR_LICENSE_FILES = LICENSE
 
 ifeq ($(BR2_PREFER_STATIC_LIB),y)
 DROPBEAR_MAKE += STATIC=1
+endif
+
+ifeq ($(BR2_PACKAGE_DROPBEAR_SERVER),y)
+DROPBEAR_TARGET_BINS += dropbear
 endif
 
 define DROPBEAR_FIX_XAUTH
@@ -43,6 +48,7 @@ define DROPBEAR_DISABLE_STANDALONE
 	$(SED) 's:\(#define NON_INETD_MODE\):/*\1 */:' $(@D)/options.h
 endef
 
+ifeq ($(BR2_PACKAGE_DROPBEAR_SERVER),y)
 define DROPBEAR_INSTALL_INIT_SYSTEMD
 	$(INSTALL) -D -m 644 package/dropbear/dropbear.service \
 		$(TARGET_DIR)/etc/systemd/system/dropbear.service
@@ -58,6 +64,7 @@ define DROPBEAR_INSTALL_INIT_SYSV
 endef
 else
 DROPBEAR_POST_EXTRACT_HOOKS += DROPBEAR_DISABLE_STANDALONE
+endif
 endif
 
 ifeq ($(BR2_PACKAGE_DROPBEAR_DISABLE_REVERSEDNS),)
@@ -82,7 +89,7 @@ endif
 
 define DROPBEAR_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 755 $(@D)/dropbearmulti $(TARGET_DIR)/usr/sbin/dropbear
-	for f in $(DROPBEAR_TARGET_BINS); do \
+	for f in $(filter-out dropbear,$(DROPBEAR_TARGET_BINS)); do \
 		ln -snf ../sbin/dropbear $(TARGET_DIR)/usr/bin/$$f ; \
 	done
 	mkdir -p $(TARGET_DIR)/etc/dropbear
