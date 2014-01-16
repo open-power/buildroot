@@ -222,6 +222,8 @@ define BUSYBOX_INSTALL_TARGET_CMDS
 	if [ ! -f $(TARGET_DIR)/usr/share/udhcpc/default.script ]; then \
 		$(INSTALL) -m 0755 -D package/busybox/udhcpc.script \
 			$(TARGET_DIR)/usr/share/udhcpc/default.script; \
+		$(INSTALL) -m 755 -d \
+			$(TARGET_DIR)/usr/share/udhcpc/default.script.d; \
 	fi
 	$(BUSYBOX_INSTALL_MDEV_SCRIPT)
 	$(BUSYBOX_INSTALL_MDEV_CONF)
