@@ -294,6 +294,8 @@ unexport TERMINFO
 GNU_HOST_NAME := $(shell support/gnuconfig/config.guess)
 
 TARGETS :=
+TARGET_TARGETS :=
+IMAGE_TARGETS :=
 
 # silent mode requested?
 QUIET := $(if $(findstring s,$(MAKEFLAGS)),-q)
@@ -531,7 +533,7 @@ endif
 
 $(TARGETS_ROOTFS): target-finalize
 
-target-finalize: $(TARGETS)
+target-finalize: $(TARGET_TARGETS)
 	@$(call MESSAGE,"Finalizing target directory")
 	$(TARGET_PURGE_LOCALES)
 	rm -rf $(TARGET_DIR)/usr/include $(TARGET_DIR)/usr/share/aclocal \
@@ -624,7 +626,7 @@ target-generatelocales: host-localedef toolchain
 	done
 endif
 
-target-post-image: $(TARGETS_ROOTFS) target-finalize
+target-post-image: $(TARGETS_ROOTFS) $(IMAGE_TARGETS) target-finalize
 	@$(foreach s, $(call qstrip,$(BR2_ROOTFS_POST_IMAGE_SCRIPT)), \
 		$(call MESSAGE,"Executing post-image script $(s)"); \
 		$(EXTRA_ENV) $(s) $(BINARIES_DIR) $(call qstrip,$(BR2_ROOTFS_POST_SCRIPT_ARGS))$(sep))
