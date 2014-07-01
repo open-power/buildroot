@@ -361,7 +361,7 @@ else
 DISABLE_IPV6= --disable-ipv6
 endif
 
-ifneq ($(BR2_INSTALL_LIBSTDCPP),y)
+ifneq ($(BR2_CPP),y)
 TARGET_CONFIGURE_OPTS+=CXX=false
 endif
 
