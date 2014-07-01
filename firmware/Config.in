@@ -1,6 +1,7 @@
 
 menu "System Firmware"
 
+source "firmware/hostboot/Config.in"
 source "firmware/skiboot/Config.in"
 
 endmenu

@@ -1,0 +1,18 @@
+config BR2_TARGET_HOSTBOOT
+        bool "hostboot"
+	depends on BR2_powerpc_power8
+	depends on BR2_CPP
+        help
+            Hostboot is low-level firmware for POWER8 machines. It is
+	    responsible for early CPU, memory and CEC initialisation.
+
+
+if BR2_TARGET_HOSTBOOT
+
+config BR2_TARGET_HOSTBOOT_CONFIG
+        string "Hostboot hardware configuration file"
+        help
+            Define a custom hardware configuration file. If none is provided,
+	    hostboot defaults will be used.
+
+endif
