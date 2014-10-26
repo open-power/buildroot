@@ -1108,6 +1108,7 @@ endif
 	source "package/cpuload/Config.in"
 	source "package/dsp-tools/Config.in"
 	source "package/htop/Config.in"
+	source "package/ipmitool/Config.in"
 	source "package/iprutils/Config.in"
 	source "package/keyutils/Config.in"
 	source "package/kmod/Config.in"

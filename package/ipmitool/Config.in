@@ -1,0 +1,9 @@
+config BR2_PACKAGE_IPMITOOL
+	bool "ipmitool
+	select BR2_PACKAGE_ZLIB
+	help
+	  IPMI (Intelligent Platform Management Interface) tool
+
+	  IPMItool provides a simple command-line interface to IPMI-enabled
+	  devices through an IPMIv1.5 or IPMIv2.0 LAN interface or
+	  Linux/Solaris kernel driver.
