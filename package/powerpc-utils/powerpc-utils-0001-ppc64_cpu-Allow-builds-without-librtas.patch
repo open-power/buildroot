@@ -1,0 +1,152 @@
+From a241432b4cde58b538a976b9c903f2d231fa87d3 Mon Sep 17 00:00:00 2001
+From: Jeremy Kerr <jk@ozlabs.org>
+Date: Sun, 26 Oct 2014 15:16:09 +0800
+Subject: [PATCH] ppc64_cpu: Allow builds without librtas
+
+Currently, --without-librtas disables ppc64_cpu.
+
+However, we only need librtas for the run-mode determination; other
+functions will work fine without it.
+
+This change allows ppc64_cpu to be built without librtas, by
+conditionally enabling run-mode, and restoring ppc64_cpu to be built
+when --without-librtas is given.
+
+We need to re-work src/Makefile.am a little here - we use the +=
+operator to include rtas-specific functionality, which means the
+with-librtas cases need to be listed before the without ones.
+
+We also need to #include stdint.h, as ppc64_cpu.c uses inttypes from
+here.
+
+Signed-off-by: Jeremy Kerr <jk@ozlabs.org>
+---
+ configure.ac    |  5 ++++-
+ src/Makefile.am | 23 ++++++++++++++---------
+ src/ppc64_cpu.c | 22 ++++++++++++++++++++--
+ 3 files changed, 38 insertions(+), 12 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 51a5158..ffdf359 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -44,7 +44,10 @@ AC_ARG_WITH([librtas],
+ 
+ AS_IF([test "x$with_librtas" != "xno"],
+ 	[AC_CHECK_HEADER([librtas.h],
+-        [with_libtras=yes],
++        [
++	    with_libtras=yes
++            AC_DEFINE(WITH_LIBRTAS)
++	],
+         [AC_MSG_FAILURE(
+                 [librtas test failed (--without-librtas to disable)])]
+     )]
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 18403b8..6b29353 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -5,9 +5,20 @@ AM_LDFLAGS =
+ 
+ SUBDIRS = drmgr
+ 
+-sbin_PROGRAMS = nvram lsprop lparstat
++sbin_PROGRAMS = nvram lsprop lparstat ppc64_cpu
+ 
+ pseries_platform_SOURCES = common/pseries_platform.c common/pseries_platform.h
++
++nvram_SOURCES = nvram.c nvram.h $(pseries_platform_SOURCES)
++nvram_LDADD = -ldl -lz
++
++lsprop_SOURCES = lsprop.c $(pseries_platform_SOURCES)
++
++lparstat_SOURCES = lparstat.c lparstat.h $(pseries_platform_SOURCES)
++
++ppc64_cpu_SOURCES = ppc64_cpu.c $(pseries_platform_SOURCES)
++ppc64_cpu_LDADD = -lpthread
++
+ if WITH_LIBRTAS
+ activate_firmware_SOURCES = activate_fw.c $(pseries_platform_SOURCES)
+ activate_firmware_LDADD = -lrtas
+@@ -30,16 +41,10 @@ rtas_event_decode_LDADD = -lrtasevent
+ sys_ident_SOURCES = sys_ident.c $(pseries_platform_SOURCES)
+ sys_ident_LDADD = -lrtas
+ 
+-ppc64_cpu_SOURCES = ppc64_cpu.c librtas_error.c librtas_error.h $(pseries_platform_SOURCES)
+-ppc64_cpu_LDADD = -lrtas -lpthread
++ppc64_cpu_SOURCES += librtas_error.c librtas_error.h
++ppc64_cpu_LDADD += -lrtas
+ 
+ sbin_PROGRAMS += activate_firmware set_poweron_time rtas_ibm_get_vpd	\
+        serv_config uesensor rtas_event_decode sys_ident ppc64_cpu
+ endif
+ 
+-nvram_SOURCES = nvram.c nvram.h $(pseries_platform_SOURCES)
+-nvram_LDADD = -ldl -lz
+-
+-lsprop_SOURCES = lsprop.c $(pseries_platform_SOURCES)
+-
+-lparstat_SOURCES = lparstat.c lparstat.h $(pseries_platform_SOURCES)
+diff --git a/src/ppc64_cpu.c b/src/ppc64_cpu.c
+index 739b289..ea21cc3 100644
+--- a/src/ppc64_cpu.c
++++ b/src/ppc64_cpu.c
+@@ -10,10 +10,10 @@
+ #define _GNU_SOURCE
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <stdint.h>
+ #include <unistd.h>
+ #include <string.h>
+ #include <dirent.h>
+-#include <librtas.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <fcntl.h>
+@@ -25,10 +25,16 @@
+ #include <sys/ptrace.h>
+ #include <sys/wait.h>
+ #include <sys/resource.h>
++
++#ifdef WITH_LIBRTAS
++#include <librtas.h>
++#include "librtas_error.h"
++#endif
++
+ #ifdef HAVE_LINUX_PERF_EVENT_H
+ #include <linux/perf_event.h>
+ #endif
+-#include "librtas_error.h"
++
+ #include <errno.h>
+ 
+ #define PPC64_CPU_VERSION	"1.1"
+@@ -702,6 +708,8 @@ static int do_smt_snooze_delay(char *state)
+ 	return rc;
+ }
+ 
++#ifdef WITH_LIBRTAS
++
+ static int do_run_mode(char *run_mode)
+ {
+ 	char mode[3];
+@@ -764,6 +772,16 @@ static int do_run_mode(char *run_mode)
+ 	return rc;
+ }
+ 
++#else
++
++static int do_run_mode(char *run_mode)
++{
++	printf("Run mode determination is not supported on this platfom.\n");
++	return -1;
++}
++
++#endif
++
+ #ifdef HAVE_LINUX_PERF_EVENT_H
+ 
+ static int setup_counters(void)
+-- 
+1.9.1
+
