@@ -1,6 +1,5 @@
 config BR2_PACKAGE_IPMITOOL
-	bool "ipmitool
-	select BR2_PACKAGE_ZLIB
+	bool "ipmitool"
 	help
 	  IPMI (Intelligent Platform Management Interface) tool
 
