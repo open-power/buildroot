@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-SKIBOOT_VERSION = 2e3bcfe490bb2ae0e3fbe5c062677026d2096093
+SKIBOOT_VERSION = 3cf5a0962e64a0f63537ddeecf04058793fed936
 SKIBOOT_SITE = $(call github,open-power,skiboot,$(SKIBOOT_VERSION))
 SKIBOOT_INSTALL_IMAGES = YES
 SKIBOOT_INSTALL_TARGET = NO
