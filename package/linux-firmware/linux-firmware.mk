@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-LINUX_FIRMWARE_VERSION = 4a050f5524a09c35192273e3a5d741f63e7bf7d6
+LINUX_FIRMWARE_VERSION = 38e5405c96d10bb42b629b45210c46166461fc21
 LINUX_FIRMWARE_SITE = http://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 LINUX_FIRMWARE_SITE_METHOD = git
 
@@ -154,16 +154,16 @@ endif
 
 ifeq ($(BR2_PACKAGE_LINUX_FIRMWARE_BNX2X),y)
 LINUX_FIRMWARE_FILES += \
-	bnx2x/bnx2x-e1-7.8.17.0.fw \
-	bnx2x/bnx2x-e1h-7.8.17.0.fw \
-	bnx2x/bnx2x-e2-7.8.17.0.fw
+	bnx2x/bnx2x-e1-7.8.19.0.fw \
+	bnx2x/bnx2x-e1h-7.8.19.0.fw \
+	bnx2x/bnx2x-e2-7.8.19.0.fw
 # No license file; the license is in the file WHENCE
 # which is installed unconditionally
 endif
 
 ifeq ($(BR2_PACKAGE_LINUX_FIRMWARE_CXGB4),y)
-# cxgb4/t4fw.bin is a symlink to cxgb4/t4fw-1.9.23.0.bin
-LINUX_FIRMWARE_FILES += cxgb4/t4fw-1.9.23.0.bin cxgb4/t4fw.bin
+# cxgb4/t4fw.bin is a symlink to cxgb4/t4fw-1.11.27.0.bin
+LINUX_FIRMWARE_FILES += cxgb4/t4fw-1.11.27.0.bin cxgb4/t4fw.bin
 LINUX_FIRMWARE_ALL_LICENSE_FILES += LICENCE.chelsio_firmware
 endif
 
