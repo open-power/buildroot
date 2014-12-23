@@ -523,7 +523,7 @@ define TARGET_PURGE_LOCALES
 
 	for dir in $(wildcard $(addprefix $(TARGET_DIR),/usr/share/locale /usr/share/X11/locale /usr/man /usr/share/man /usr/lib/locale)); \
 	do \
-		for lang in $$(cd $$dir; ls .|grep -v man); \
+		for lang in $$(cd $$dir; ls .|grep -v man\\\|locale-archive); \
 		do \
 			grep -qx $$lang $(LOCALE_WHITELIST) || rm -rf $$dir/$$lang; \
 		done; \
