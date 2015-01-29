@@ -1,7 +1,7 @@
 
 config BR2_TARGET_SKIBOOT
 	bool "skiboot"
-	depends on BR2_powerpc64
+	depends on BR2_powerpc64 || BR2_powerpc64le
 	help
 	  Build skiboot POWER8 firmware
 
