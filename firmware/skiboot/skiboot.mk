@@ -4,13 +4,12 @@
 #
 ################################################################################
 
-SKIBOOT_VERSION = 7185393df6d7d806811b827fabce1d8ad3e05fff
+SKIBOOT_VERSION = skiboot-4.1.1
 SKIBOOT_SITE = $(call github,open-power,skiboot,$(SKIBOOT_VERSION))
 SKIBOOT_INSTALL_IMAGES = YES
 SKIBOOT_INSTALL_TARGET = NO
 
-SKIBOOT_MAKE_OPTS += GIT_SHA=$(shell echo $(SKIBOOT_VERSION) | head -c7) \
-		     CC="$(TARGET_CC)" LD="$(TARGET_LD)" \
+SKIBOOT_MAKE_OPTS += CC="$(TARGET_CC)" LD="$(TARGET_LD)" \
 		     AS="$(TARGET_AS)" AR="$(TARGET_AR)" NM="$(TARGET_NM)" \
 		     OBJCOPY="$(TARGET_OBJCOPY)" OBJDUMP="$(TARGET_OBJDUMP)" \
 		     SIZE="$(TARGET_CROSS)size"
@@ -27,7 +26,8 @@ endif
 endif
 
 define SKIBOOT_BUILD_CMDS
-	$(TARGET_CONFIGURE_OPTS) $(MAKE) $(SKIBOOT_MAKE_OPTS) -C $(@D) all
+	$(TARGET_CONFIGURE_OPTS) SKIBOOT_VERSION=$(SKIBOOT_VERSION) \
+		$(MAKE) $(SKIBOOT_MAKE_OPTS) -C $(@D) all
 endef
 
 define SKIBOOT_INSTALL_IMAGES_CMDS
