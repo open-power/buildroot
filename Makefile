@@ -396,7 +396,7 @@ include $(BR2_EXTERNAL)/external.mk
 
 ifeq ($(BR2_TOOLCHAIN_USES_GLIBC),y)
 ifneq ($(GENERATE_LOCALE),)
-TARGETS += target-generatelocales
+TARGET_TARGETS += target-generatelocales
 endif
 endif
 
