@@ -3,8 +3,11 @@
 LOGFILE=/var/log/petitboot/pb-discover.log
 PIDFILE=/var/run/petitboot.pid
 
+PATH=/usr/bin:/usr/sbin:/bin:/sbin
+export PATH
+
 verbose=
-if /usr/libexec/petitboot/pb-sysinfo --debug-enabled
+if pb-config debug | grep -q enabled
 then
 	verbose=-v
 fi
@@ -13,7 +16,7 @@ case "$1" in
     start)
         ulimit -c unlimited
         mkdir -p $(dirname $LOGFILE)
-        PATH=/usr/bin:/usr/sbin:/bin:/sbin pb-discover -l $LOGFILE $verbose &
+        pb-discover -l $LOGFILE $verbose &
         echo $! > $PIDFILE
         ;;
     stop)
