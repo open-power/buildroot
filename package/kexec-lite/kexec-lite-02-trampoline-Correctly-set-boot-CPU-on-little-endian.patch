@@ -1,0 +1,51 @@
+From 0ea7a41c1a88f248206455589d3d1c8a08e8362d Mon Sep 17 00:00:00 2001
+From: Jeremy Kerr <jk@ozlabs.org>
+Date: Mon, 2 Feb 2015 22:05:39 +0800
+Subject: [PATCH] trampoline: Correctly set boot CPU on little-endian
+
+Currently, a little-endian trampoline will store the boot cpu value
+into the device-tree header with a simple stw. However, the fdt is
+defined as big-endian, so we'll be setting an endian-reversed value
+here.
+
+This change uses a stwbrx on little-endian, and a stwx for big-endian.
+Because we only have an x-form instruction for a byte-reversed store, we
+need an extra instruction to add our offset.
+
+Signed-off-by: Jeremy Kerr <jk@ozlabs.org>
+---
+ kexec_trampoline.S | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/kexec_trampoline.S b/kexec_trampoline.S
+index 954aa63..a3eb314 100644
+--- a/kexec_trampoline.S
++++ b/kexec_trampoline.S
+@@ -48,6 +48,14 @@
+ #define LOAD	lwz
+ #endif
+ 
++#if defined(__LITTLE_ENDIAN__)
++#define STWX_BE	stwbrx
++#elif defined(__BIG_ENDIAN__)
++#define STWX_BE	stwx
++#else
++#error no endianness defined!
++#endif
++
+ .globl	__trampoline_start
+ __trampoline_start:
+ 	b	start
+@@ -72,7 +80,8 @@ start:
+ 
+ 	LOAD	r7,(device_tree_addr - 1b)(r6)
+ 	/* We save the physical cpu id in the device tree header */
+-	stw	r3,DT_CPU_OFFSET(r7)
++	addi	r5,r7,DT_CPU_OFFSET
++	STWX_BE	r3,0,r5
+ 	mr	r3,r7
+ 
+ 	LOAD	r4,(kernel_addr - 1b)(r6)
+-- 
+1.9.1
+
