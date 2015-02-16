@@ -41,7 +41,9 @@ endif
 LINUX_PATCHES = $(call qstrip,$(BR2_LINUX_KERNEL_PATCH))
 
 LINUX_INSTALL_IMAGES = YES
-LINUX_DEPENDENCIES += host-kmod host-lzop
+
+PLAT_XML_PACKAGE = $(patsubst "%",%, $(BR2_OPENPOWER_CONFIG_NAME))-xml
+LINUX_DEPENDENCIES += host-kmod host-lzop $(PLAT_XML_PACKAGE)
 
 ifeq ($(BR2_LINUX_KERNEL_UBOOT_IMAGE),y)
 	LINUX_DEPENDENCIES += host-uboot-tools
