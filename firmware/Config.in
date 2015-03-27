@@ -1,6 +1,0 @@
-
-menu "System Firmware"
-
-source "firmware/skiboot/Config.in"
-
-endmenu

@@ -551,8 +551,6 @@ source "fs/Config.in"
 
 source "boot/Config.in"
 
-source "firmware/Config.in"
-
 source "package/Config.in.host"
 
 source "Config.in.legacy"
