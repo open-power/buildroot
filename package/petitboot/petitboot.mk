@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-PETITBOOT_VERSION = f2201e9716f7faedd6c6deba4169b5e7dd2c0cf1
+PETITBOOT_VERSION = 28219c8896177558892f48bef03ef7381382c420
 PETITBOOT_SITE = git://ozlabs.org/~jk/petitboot
 PETITBOOT_DEPENDENCIES = ncurses udev host-bison host-flex
 PETITBOOT_LICENSE = GPLv2
