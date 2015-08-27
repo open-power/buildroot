@@ -409,6 +409,9 @@ GNU_HOST_NAME := $(shell support/gnuconfig/config.guess)
 PACKAGES :=
 PACKAGES_ALL :=
 
+TARGET_TARGETS :=
+IMAGE_TARGETS :=
+
 # silent mode requested?
 QUIET := $(if $(findstring s,$(filter-out --%,$(MAKEFLAGS))),-q)
 
@@ -654,7 +657,7 @@ endif
 
 $(TARGETS_ROOTFS): target-finalize
 
-target-finalize: $(PACKAGES)
+target-finalize: $(TARGET_TARGETS) host-localedef
 	@$(call MESSAGE,"Finalizing target directory")
 	$(foreach hook,$(TARGET_FINALIZE_HOOKS),$($(hook))$(sep))
 	rm -rf $(TARGET_DIR)/usr/include $(TARGET_DIR)/usr/share/aclocal \
@@ -714,7 +717,7 @@ endif
 		$(call MESSAGE,"Executing post-build script $(s)"); \
 		$(EXTRA_ENV) $(s) $(TARGET_DIR) $(call qstrip,$(BR2_ROOTFS_POST_SCRIPT_ARGS))$(sep))
 
-target-post-image: $(TARGETS_ROOTFS) target-finalize
+target-post-image: $(TARGETS_ROOTFS) $(IMAGE_TARGETS) target-finalize
 	@$(foreach s, $(call qstrip,$(BR2_ROOTFS_POST_IMAGE_SCRIPT)), \
 		$(call MESSAGE,"Executing post-image script $(s)"); \
 		$(EXTRA_ENV) $(s) $(BINARIES_DIR) $(call qstrip,$(BR2_ROOTFS_POST_SCRIPT_ARGS))$(sep))
