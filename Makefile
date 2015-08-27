@@ -427,6 +427,9 @@ GNU_HOST_NAME := $(shell support/gnuconfig/config.guess)
 PACKAGES :=
 PACKAGES_ALL :=
 
+PACKAGE_TARGETS :=
+IMAGE_TARGETS :=
+
 # silent mode requested?
 QUIET := $(if $(findstring s,$(filter-out --%,$(MAKEFLAGS))),-q)
 
@@ -736,7 +739,7 @@ staging-finalize:
 	@ln -snf $(STAGING_DIR) $(BASE_DIR)/staging
 
 .PHONY: target-finalize
-target-finalize: $(PACKAGES) host-finalize
+target-finalize: $(PACKAGE_TARGETS) host-localedef
 	@$(call MESSAGE,"Finalizing target directory")
 	# Check files that are touched by more than one package
 	./support/scripts/check-uniq-files -t target $(BUILD_DIR)/packages-file-list.txt
@@ -810,7 +813,7 @@ endif # merged /usr
 	touch $(TARGET_DIR)/usr
 
 .PHONY: target-post-image
-target-post-image: $(TARGETS_ROOTFS) target-finalize staging-finalize
+target-post-image: $(TARGETS_ROOTFS) $(IMAGE_TARGETS) target-finalize
 	@rm -f $(ROOTFS_COMMON_TAR)
 	@$(foreach s, $(call qstrip,$(BR2_ROOTFS_POST_IMAGE_SCRIPT)), \
 		$(call MESSAGE,"Executing post-image script $(s)"); \
