@@ -253,9 +253,9 @@ endif
 
 ifeq ($(BR2_PACKAGE_LINUX_FIRMWARE_BNX2X),y)
 LINUX_FIRMWARE_FILES += \
-	bnx2x/bnx2x-e1-7.10.51.0.fw \
-	bnx2x/bnx2x-e1h-7.10.51.0.fw \
-	bnx2x/bnx2x-e2-7.10.51.0.fw
+	bnx2x/bnx2x-e1-7.12.30.0.fw \
+	bnx2x/bnx2x-e1h-7.12.30.0.fw \
+	bnx2x/bnx2x-e2-7.12.30.0.fw
 # No license file; the license is in the file WHENCE
 # which is installed unconditionally
 endif
