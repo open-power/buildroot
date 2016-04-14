@@ -845,6 +845,10 @@ defconfig: $(BUILD_DIR)/buildroot-config/conf outputmakefile
 	@$(COMMON_CONFIG_ENV) BR2_DEFCONFIG=$(BR2_EXTERNAL)/configs/$@ \
 		$< --defconfig=$(BR2_EXTERNAL)/configs/$@ $(CONFIG_CONFIG_IN)
 
+%_defconfig: $(BUILD_DIR)/buildroot-config/conf $(wildcard $(BR2_EXTERNAL)/configs/*/%_defconfig) outputmakefile
+	@$(COMMON_CONFIG_ENV) BR2_DEFCONFIG=$(wildcard $(BR2_EXTERNAL)/configs/*/$@) \
+		$< --defconfig=$(wildcard $(BR2_EXTERNAL)/configs/*/$@) $(CONFIG_CONFIG_IN)
+
 savedefconfig: $(BUILD_DIR)/buildroot-config/conf outputmakefile
 	@$(COMMON_CONFIG_ENV) $< \
 		--savedefconfig=$(if $(DEFCONFIG),$(DEFCONFIG),$(CONFIG_DIR)/defconfig) \
@@ -982,6 +986,12 @@ ifneq ($(wildcard $(BR2_EXTERNAL)/configs/*_defconfig),)
 	@echo
 	@echo 'User-provided configs:'
 	@$(foreach b, $(sort $(notdir $(wildcard $(BR2_EXTERNAL)/configs/*_defconfig))), \
+	  printf "  %-35s - Build for %s\\n" $(b) $(b:_defconfig=);)
+endif
+ifneq ($(wildcard $(BR2_EXTERNAL)/custom/configs/*_defconfig),)
+	@echo
+	@echo 'User-provided custom configs:'
+	@$(foreach b, $(sort $(notdir $(wildcard $(BR2_EXTERNAL)/custom/configs/*_defconfig))), \
 	  printf "  %-35s - Build for %s\\n" $(b) $(b:_defconfig=);)
 endif
 	@echo
