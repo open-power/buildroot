@@ -845,6 +845,14 @@ defconfig: $(BUILD_DIR)/buildroot-config/conf outputmakefile
 	@$(COMMON_CONFIG_ENV) BR2_DEFCONFIG=$(BR2_EXTERNAL)/configs/$@ \
 		$< --defconfig=$(BR2_EXTERNAL)/configs/$@ $(CONFIG_CONFIG_IN)
 
+%_defconfig: $(BUILD_DIR)/buildroot-config/conf $(wildcard $(TOPDIR)/configs/*/%_defconfig) outputmakefile
+	@$(COMMON_CONFIG_ENV) BR2_DEFCONFIG=$(wildcard $(TOPDIR)/configs/*/$@) \
+		$< --defconfig=$(wildcard $(TOPDIR)/configs/*/$@) $(CONFIG_CONFIG_IN)
+
+%_defconfig: $(BUILD_DIR)/buildroot-config/conf $(wildcard $(BR2_EXTERNAL)/configs/*/%_defconfig) outputmakefile
+	@$(COMMON_CONFIG_ENV) BR2_DEFCONFIG=$(wildcard $(BR2_EXTERNAL)/configs/*/$@) \
+		$< --defconfig=$(wildcard $(BR2_EXTERNAL)/configs/*/$@) $(CONFIG_CONFIG_IN)
+
 savedefconfig: $(BUILD_DIR)/buildroot-config/conf outputmakefile
 	@$(COMMON_CONFIG_ENV) $< \
 		--savedefconfig=$(if $(DEFCONFIG),$(DEFCONFIG),$(CONFIG_DIR)/defconfig) \
