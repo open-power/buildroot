@@ -87,9 +87,9 @@ all:
 .PHONY: all
 
 # Set and export the version string
-export BR2_VERSION := 2017.08
+export BR2_VERSION := 2017.08.1
 # Actual time the release is cut (for reproducible builds)
-BR2_VERSION_EPOCH = 1504300000
+BR2_VERSION_EPOCH = 1508790000
 
 # Save running make version since it's clobbered by the make package
 RUNNING_MAKE_VERSION := $(MAKE_VERSION)
@@ -489,6 +489,8 @@ include package/Makefile.in
 -include $(wildcard arch/arch.mk.*)
 include support/dependencies/dependencies.mk
 
+PACKAGES += $(DEPENDENCIES_HOST_PREREQ)
+
 include toolchain/*.mk
 include toolchain/*/*.mk
 
@@ -545,7 +547,7 @@ endif
 
 .PHONY: dirs
 dirs: $(BUILD_DIR) $(STAGING_DIR) $(TARGET_DIR) \
-	$(HOST_DIR) $(HOST_DIR)/usr $(BINARIES_DIR)
+	$(HOST_DIR) $(HOST_DIR)/usr $(HOST_DIR)/lib $(BINARIES_DIR)
 
 $(BUILD_DIR)/buildroot-config/auto.conf: $(BR2_CONFIG)
 	$(MAKE1) $(EXTRAMAKEARGS) HOSTCC="$(HOSTCC_NOCCACHE)" HOSTCXX="$(HOSTCXX_NOCCACHE)" silentoldconfig
@@ -567,6 +569,13 @@ sdk: world
 # Compatibility symlink in case a post-build script still uses $(HOST_DIR)/usr
 $(HOST_DIR)/usr: $(HOST_DIR)
 	@ln -snf . $@
+
+$(HOST_DIR)/lib: $(HOST_DIR)
+	@mkdir -p $@
+	@case $(HOSTARCH) in \
+		(*64) ln -snf lib $(@D)/lib64;; \
+		(*)   ln -snf lib $(@D)/lib32;; \
+	esac
 
 # Populating the staging with the base directories is handled by the skeleton package
 $(STAGING_DIR):
