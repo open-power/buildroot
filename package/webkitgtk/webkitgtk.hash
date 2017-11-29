@@ -1,4 +1,4 @@
-# From https://webkitgtk.org/releases/webkitgtk-2.18.1.tar.xz.sums
-md5 951a6082ada2f7d0292d3251a3f9532b webkitgtk-2.18.1.tar.xz
-sha1 5054dd6b8afdc6e98b947e361011d6dca6da74e2 webkitgtk-2.18.1.tar.xz
-sha256 9cdb7b302fbc8a2a7e1e783b80391e64f8b12d70d6ebad4eb756dd59bf3ed795 webkitgtk-2.18.1.tar.xz
+# From https://webkitgtk.org/releases/webkitgtk-2.18.3.tar.xz.sums
+md5 264a22d7467deae606e42b6eb5dd65af webkitgtk-2.18.3.tar.xz
+sha1 164cad34281ef597a3d4ad214e8037c3ddef4d17 webkitgtk-2.18.3.tar.xz
+sha256 e15420e1616a6f70f321541d467af5ca285bff66b1e0fa68a01df3ccf1b18f9e webkitgtk-2.18.3.tar.xz
