@@ -2,7 +2,7 @@
 #
 # Copyright (C) 1999-2005 by Erik Andersen <andersen@codepoet.org>
 # Copyright (C) 2006-2014 by the Buildroot developers <buildroot@uclibc.org>
-# Copyright (C) 2014-2018 by the Buildroot developers <buildroot@buildroot.org>
+# Copyright (C) 2014-2019 by the Buildroot developers <buildroot@buildroot.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ all:
 .PHONY: all
 
 # Set and export the version string
-export BR2_VERSION := 2018.11.1
+export BR2_VERSION := 2018.11.2
 # Actual time the release is cut (for reproducible builds)
 BR2_VERSION_EPOCH = 1545257000
 
