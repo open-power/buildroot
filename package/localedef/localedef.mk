@@ -13,6 +13,8 @@ LOCALEDEF_DEPENDENCIES = $(BR2_MAKE_HOST_DEPENDENCY)
 HOST_LOCALEDEF_LICENSE = GPL-2.0+ (programs), LGPL-2.1+, BSD-3-Clause, MIT (library)
 HOST_LOCALEDEF_LICENSE_FILES = COPYING COPYING.LIB LICENSES
 
+HOST_LOCALEDEF_CONF_ENV += ac_cv_prog_MAKE="$(BR2_MAKE)"
+
 # Even though we use the autotools-package infrastructure, we have to override
 # the default configure commands for since we have to build out-of-tree, but we
 # can't use the same 'symbolic link to configure' used with the gcc packages.
@@ -20,6 +22,7 @@ define HOST_LOCALEDEF_CONFIGURE_CMDS
 	mkdir -p $(@D)/build
 	# Do the configuration
 	(cd $(@D)/build; \
+		$(HOST_LOCALEDEF_CONF_ENV) \
 		$(HOST_CONFIGURE_OPTS) \
 		$(SHELL) $(@D)/configure \
 		libc_cv_forced_unwind=yes \
