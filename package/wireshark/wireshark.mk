@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-WIRESHARK_VERSION = 2.6.6
+WIRESHARK_VERSION = 2.6.7
 WIRESHARK_SOURCE = wireshark-$(WIRESHARK_VERSION).tar.xz
 WIRESHARK_SITE = https://www.wireshark.org/download/src/all-versions
 WIRESHARK_LICENSE = wireshark license
@@ -143,6 +143,13 @@ WIRESHARK_CONF_ENV += LIBS=-lstdc++
 endif
 else
 WIRESHARK_CONF_OPTS += --without-snappy
+endif
+
+ifeq ($(BR2_PACKAGE_SPANDSP),y)
+WIRESHARK_CONF_OPTS += --with-spandsp
+WIRESHARK_DEPENDENCIES += spandsp
+else
+WIRESHARK_CONF_OPTS += --without-spandsp
 endif
 
 define WIRESHARK_REMOVE_DOCS
