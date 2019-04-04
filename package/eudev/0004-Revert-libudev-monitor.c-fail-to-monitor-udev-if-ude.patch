@@ -1,0 +1,33 @@
+From ba25cdd6fb1261ca9063c243df3c6b404d80a454 Mon Sep 17 00:00:00 2001
+From: Samuel Mendoza-Jonas <sam@mendozajonas.com>
+Date: Thu, 4 Apr 2019 11:59:51 +1100
+Subject: [PATCH] Revert "libudev-monitor.c: fail to monitor udev if udev is
+ not started"
+
+If /dev is mounted on devtmpfs then the name_to_handle_at() call in
+udev_has_devtmpfs() will fail because devtmpfs does not support this
+operation, and the monitor will always fail.
+
+This reverts commit b1e47be38259f33e1db18193904575a1ffa21be8.
+
+Signed-off-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
+---
+ src/libudev/libudev-monitor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/libudev/libudev-monitor.c b/src/libudev/libudev-monitor.c
+index 614149c62..fe494a4a7 100644
+--- a/src/libudev/libudev-monitor.c
++++ b/src/libudev/libudev-monitor.c
+@@ -186,7 +186,7 @@ struct udev_monitor *udev_monitor_new_from_netlink_fd(struct udev *udev, const c
+                  * We do not set a netlink multicast group here, so the socket
+                  * will not receive any messages.
+                  */
+-                if (access(UDEV_ROOT_RUN "/udev/control", F_OK) < 0 || !udev_has_devtmpfs(udev)) {
++                if (access(UDEV_ROOT_RUN "/udev/control", F_OK) < 0 && !udev_has_devtmpfs(udev)) {
+                         log_debug("the udev service seems not to be active, disable the monitor");
+                         group = UDEV_MONITOR_NONE;
+                 } else
+-- 
+2.21.0
+
