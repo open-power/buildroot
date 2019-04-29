@@ -1,4 +1,4 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 193f1e81edd6b1b56b0eb0ff8aa4b41c7b4257b4 Mon Sep 17 00:00:00 2001
 From: Paul Eggert <eggert@cs.ucla.edu>
 Date: Sun, 24 Sep 2017 09:12:58 -0400
 Subject: [PATCH] glob: Do not assume glibc glob internals.
@@ -11,6 +11,9 @@ https://sourceware.org/ml/libc-alpha/2017-09/msg00409.html
 * dir.c (local_lstat): New function, like local_stat.
 (dir_setup_glob): Use it to initialize gl_lstat too, as the API
 requires.
+
+Signed-off-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
+(from upstream commit 193f1e81edd6b1b56b0eb0ff8aa4b41c7b4257b4)
 ---
  dir.c | 29 +++++++++++++++++++++++++++--
  1 file changed, 27 insertions(+), 2 deletions(-)

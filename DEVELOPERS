@@ -168,6 +168,7 @@ F:	package/sysdig/
 N:	Anisse Astier <anisse@astier.eu>
 F:	package/go/
 F:	package/nghttp2/
+F:	package/pkg-golang.mk
 
 N:	Anthony Viallard <viallard@syscom-instruments.com>
 F:	package/gnuplot/
@@ -420,8 +421,7 @@ F:	package/pdmenu/
 N:	Carlo Caione <carlo.caione@gmail.com>
 F:	package/sunxi-boards/
 
-N:	Carlos Santos <casantos@datacom.com.br>
-F:	package/aer-inject/
+N:	Carlos Santos <unixmania@gmail.com>
 F:	package/busybox/
 F:	package/gtest/
 F:	package/initscripts/
@@ -484,6 +484,7 @@ F:	package/docker-engine/
 F:	package/docker-proxy/
 F:	package/go/
 F:	package/mosh/
+F:	package/pkg-golang.mk
 F:	package/rtl8821au/
 F:	package/runc/
 F:	package/tini/
