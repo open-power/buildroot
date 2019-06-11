@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-POSTGRESQL_VERSION = 11.2
+POSTGRESQL_VERSION = 11.3
 POSTGRESQL_SOURCE = postgresql-$(POSTGRESQL_VERSION).tar.bz2
 POSTGRESQL_SITE = http://ftp.postgresql.org/pub/source/v$(POSTGRESQL_VERSION)
 POSTGRESQL_LICENSE = PostgreSQL
@@ -92,6 +92,14 @@ POSTGRESQL_CONF_OPTS += --with-systemd
 else
 POSTGRESQL_CONF_OPTS += --without-systemd
 endif
+
+POSTGRESQL_CFLAGS = $(TARGET_CFLAGS)
+
+ifeq ($(BR2_TOOLCHAIN_HAS_GCC_BUG_85180),y)
+POSTGRESQL_CFLAGS += -O0
+endif
+
+POSTGRESQL_CONF_ENV += CFLAGS="$(POSTGRESQL_CFLAGS)"
 
 define POSTGRESQL_USERS
 	postgres -1 postgres -1 * /var/lib/pgsql /bin/sh - PostgreSQL Server
