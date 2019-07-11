@@ -5,13 +5,13 @@
 ################################################################################
 
 # Use the same VERSION and SITE as target glibc
-LOCALEDEF_VERSION = glibc-2.28
+# As in glibc.mk, generate version string using:
+#   git describe --match 'glibc-*' --abbrev=40 origin/release/MAJOR.MINOR/master | cut -d '-' -f 2-
+LOCALEDEF_VERSION = 2.29-11-ge28ad442e73b00ae2047d89c8cc7f9b2a0de5436
 LOCALEDEF_SOURCE = glibc-$(LOCALEDEF_VERSION).tar.gz
 LOCALEDEF_SITE = $(call github,bminor,glibc,$(LOCALEDEF_VERSION))
 LOCALEDEF_DEPENDENCIES = $(BR2_MAKE_HOST_DEPENDENCY)
-
-HOST_LOCALEDEF_LICENSE = GPL-2.0+ (programs), LGPL-2.1+, BSD-3-Clause, MIT (library)
-HOST_LOCALEDEF_LICENSE_FILES = COPYING COPYING.LIB LICENSES
+HOST_LOCALEDEF_DL_SUBDIR = glibc
 
 HOST_LOCALEDEF_CONF_ENV += ac_cv_prog_MAKE="$(BR2_MAKE)"
 
@@ -39,7 +39,7 @@ define HOST_LOCALEDEF_CONFIGURE_CMDS
 endef
 
 define HOST_LOCALEDEF_BUILD_CMDS
-	$(HOST_MAKE_ENV) $(BR2_MAKE) $(HOST_LOCALEDEF_MAKE_OPTS) \
+	$(HOST_MAKE_ENV) $(BR2_MAKE1) $(HOST_LOCALEDEF_MAKE_OPTS) \
 		-C $(@D)/build locale/others
 endef
 

@@ -1,2 +1,2 @@
-# Locally calculated
-sha256 877c7b4741501d1762af8ef1a2518bdf2d722947d2e8d48b203e2d83cc600bca glibc-glibc-2.28.tar.gz
+# This hash file is not used; instead, update the
+# hash files in the per-version sub-directories.
