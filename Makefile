@@ -92,9 +92,9 @@ all:
 .PHONY: all
 
 # Set and export the version string
-export BR2_VERSION := 2019.05.1
+export BR2_VERSION := 2019.05.2
 # Actual time the release is cut (for reproducible builds)
-BR2_VERSION_EPOCH = 1562530000
+BR2_VERSION_EPOCH = 1567507000
 
 # Save running make version since it's clobbered by the make package
 RUNNING_MAKE_VERSION := $(MAKE_VERSION)
@@ -248,7 +248,6 @@ ifeq ($(BR2_REPRODUCIBLE),y)
 export TZ = UTC
 export LANG = C
 export LC_ALL = C
-export GZIP = -n
 endif
 
 # To put more focus on warnings, be less verbose as default
@@ -815,6 +814,7 @@ endif # merged /usr
 .PHONY: target-post-image
 target-post-image: $(TARGETS_ROOTFS) $(IMAGE_TARGETS) target-finalize
 	@rm -f $(ROOTFS_COMMON_TAR)
+	$(Q)mkdir -p $(BINARIES_DIR)
 	@$(foreach s, $(call qstrip,$(BR2_ROOTFS_POST_IMAGE_SCRIPT)), \
 		$(call MESSAGE,"Executing post-image script $(s)"); \
 		$(EXTRA_ENV) $(s) $(BINARIES_DIR) $(call qstrip,$(BR2_ROOTFS_POST_SCRIPT_ARGS))$(sep))

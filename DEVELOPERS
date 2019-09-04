@@ -26,9 +26,6 @@
 #   infrastructure, and will be CC'ed on all patches that add or
 #   modify packages that use this infrastructure.
 
-N:	Abhilash Tuse <abhilash.tuse@imgtec.com>
-F:	package/gstreamer1/gst1-rtsp-server/
-
 N:	Adam Duskett <aduskett@gmail.com>
 F:	package/audit/
 F:	package/busybox/
@@ -157,9 +154,6 @@ F:	package/zstd/
 
 N:	Andrey Yurovsky <yurovsky@gmail.com>
 F:	package/rauc/
-
-N:	Andy Kennedy <andy.kennedy@adtran.com>
-F:	package/libunwind/
 
 N:	Angelo Compagnucci <angelo.compagnucci@gmail.com>
 F:	package/corkscrew/
@@ -651,9 +645,6 @@ F:	package/unscd/
 
 N:	Dushara Jayasinghe <nidujay@gmail.com>
 F:	package/prosody/
-
-N:	Ed Swierk <eswierk@skyportsystems.com>
-F:	package/xxhash/
 
 N:	Eloi Bail <eloi.bail@savoirfairelinux.com>
 F:	package/bayer2rgb-neon/
@@ -1385,9 +1376,6 @@ F:	package/luaossl/
 F:	package/rs485conf/
 F:	package/turbolua/
 
-N:	Marcin Nowakowski <marcin.nowakowski@imgtec.com>
-F:	package/libkcapi/
-
 N:	Marcus Folkesson <marcus.folkesson@gmail.com>
 F:	package/libostree/
 F:	package/libselinux/
@@ -2098,9 +2086,6 @@ F:	package/mjpegtools/
 F:	package/tovid/
 F:	package/udftools/
 F:	package/xorriso/
-
-N:	Steve Thomas <scjthm@live.com>
-F:	package/isl/
 
 N:	Steven Noonan <steven@uplinklabs.net>
 F:	package/hwloc/
