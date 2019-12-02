@@ -61,6 +61,10 @@ config BR2_KERNEL_HEADERS_5_3
 	bool "Linux 5.3.x kernel headers"
 	select BR2_TOOLCHAIN_HEADERS_AT_LEAST_5_3
 
+config BR2_KERNEL_HEADERS_5_4
+	bool "Linux 5.4.x kernel headers"
+	select BR2_TOOLCHAIN_HEADERS_AT_LEAST_5_4
+
 config BR2_KERNEL_HEADERS_VERSION
 	bool "Manually specified Linux version"
 	help
@@ -125,6 +129,10 @@ choice
 
 	  This is used to hide/show some packages that have strict
 	  requirements on the version of kernel headers.
+
+config BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_4
+	bool "5.4.x"
+	select BR2_TOOLCHAIN_HEADERS_AT_LEAST_5_4
 
 config BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_3
 	bool "5.3.x"
@@ -313,14 +321,12 @@ endchoice
 
 config BR2_DEFAULT_KERNEL_HEADERS
 	string
-	default "4.4.194"	if BR2_KERNEL_HEADERS_4_4
-	default "4.9.194"	if BR2_KERNEL_HEADERS_4_9
-	default "4.14.146"	if BR2_KERNEL_HEADERS_4_14
-	default "4.19.76"	if BR2_KERNEL_HEADERS_4_19
-	default "5.0.21"	if BR2_KERNEL_HEADERS_5_0
-	default "5.1.21"	if BR2_KERNEL_HEADERS_5_1
-	default "5.2.16"	if BR2_KERNEL_HEADERS_5_2
-	default "5.3.1"		if BR2_KERNEL_HEADERS_5_3
+	default "4.4.205"	if BR2_KERNEL_HEADERS_4_4
+	default "4.9.205"	if BR2_KERNEL_HEADERS_4_9
+	default "4.14.157"	if BR2_KERNEL_HEADERS_4_14
+	default "4.19.87"	if BR2_KERNEL_HEADERS_4_19
+	default "5.3.14"	if BR2_KERNEL_HEADERS_5_3
+	default "5.4" 		if BR2_KERNEL_HEADERS_5_4
 	default BR2_DEFAULT_KERNEL_VERSION if BR2_KERNEL_HEADERS_VERSION
 	default "custom"	if BR2_KERNEL_HEADERS_CUSTOM_TARBALL
 	default BR2_KERNEL_HEADERS_CUSTOM_REPO_VERSION \
