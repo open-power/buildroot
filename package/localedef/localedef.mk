@@ -35,7 +35,8 @@ define HOST_LOCALEDEF_CONFIGURE_CMDS
 		--without-cvs \
 		--disable-profile \
 		--without-gd \
-		--enable-obsolete-rpc)
+		--enable-obsolete-rpc \
+		--disable-werror)
 endef
 
 define HOST_LOCALEDEF_BUILD_CMDS
