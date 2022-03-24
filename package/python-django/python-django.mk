@@ -4,10 +4,11 @@
 #
 ################################################################################
 
-PYTHON_DJANGO_VERSION = 3.2.2
+PYTHON_DJANGO_VERSION = 3.2.12
 PYTHON_DJANGO_SOURCE = Django-$(PYTHON_DJANGO_VERSION).tar.gz
 # The official Django site has an unpractical URL
-PYTHON_DJANGO_SITE = https://files.pythonhosted.org/packages/da/24/e2e6e534464f8e0bd010401f06d2cfc773141776d2952d6418d01c97f12c
+PYTHON_DJANGO_SITE = https://files.pythonhosted.org/packages/83/d9/7f28811ff78ce1903dc9a32ac439e4e6c98298cd2e99cb01f528e51dd796
+
 PYTHON_DJANGO_LICENSE = BSD-3-Clause
 PYTHON_DJANGO_LICENSE_FILES = LICENSE
 PYTHON_DJANGO_CPE_ID_VENDOR = djangoproject

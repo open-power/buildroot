@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-GST1_PLUGINS_BAD_VERSION = 1.18.4
+GST1_PLUGINS_BAD_VERSION = 1.18.6
 GST1_PLUGINS_BAD_SOURCE = gst-plugins-bad-$(GST1_PLUGINS_BAD_VERSION).tar.xz
 GST1_PLUGINS_BAD_SITE = https://gstreamer.freedesktop.org/src/gst-plugins-bad
 GST1_PLUGINS_BAD_INSTALL_STAGING = YES
@@ -59,12 +59,11 @@ GST1_PLUGINS_BAD_CONF_OPTS += \
 	-Dofa=disabled \
 	-Dopenexr=disabled \
 	-Dopenni2=disabled \
-	-Dteletextdec=disabled \
+	-Dteletext=disabled \
 	-Dwildmidi=disabled \
 	-Dsmoothstreaming=disabled \
 	-Dsoundtouch=disabled \
 	-Dgme=disabled \
-	-Dvdpau=disabled \
 	-Dspandsp=disabled \
 	-Dsvthevcenc=disabled \
 	-Dtranscode=disabled \

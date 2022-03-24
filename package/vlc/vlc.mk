@@ -4,14 +4,14 @@
 #
 ################################################################################
 
-VLC_VERSION = 3.0.14
+VLC_VERSION = 3.0.16
 VLC_SITE = https://get.videolan.org/vlc/$(VLC_VERSION)
 VLC_SOURCE = vlc-$(VLC_VERSION).tar.xz
 VLC_LICENSE = GPL-2.0+, LGPL-2.1+
 VLC_LICENSE_FILES = COPYING COPYING.LIB
 VLC_CPE_ID_VENDOR = videolan
 VLC_CPE_ID_PRODUCT = vlc_media_player
-VLC_DEPENDENCIES = host-pkgconf
+VLC_DEPENDENCIES = host-gettext host-pkgconf
 VLC_AUTORECONF = YES
 
 # Install vlc libraries in staging.

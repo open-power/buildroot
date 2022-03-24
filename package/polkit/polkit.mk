@@ -12,6 +12,9 @@ POLKIT_CPE_ID_VENDOR = polkit_project
 POLKIT_AUTORECONF = YES
 POLKIT_INSTALL_STAGING = YES
 
+# 0004-pkexec-local-privilege-escalation-CVE-2021-4034.patch
+POLKIT_IGNORE_CVE = CVE-2021-4034
+
 POLKIT_DEPENDENCIES = \
 	libglib2 host-intltool expat spidermonkey $(TARGET_NLS_DEPENDENCIES)
 
@@ -55,6 +58,11 @@ define POLKIT_INSTALL_INIT_SYSTEMD
 	$(INSTALL) -D -m 644 $(POLKIT_PKGDIR)/polkit.service \
 		$(TARGET_DIR)/usr/lib/systemd/system/polkit.service
 
+endef
+
+define POLKIT_INSTALL_INIT_SYSV
+	$(INSTALL) -D -m 0755 package/polkit/S50polkit \
+		$(TARGET_DIR)/etc/init.d/S50polkit
 endef
 
 $(eval $(autotools-package))
