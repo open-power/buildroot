@@ -36,6 +36,13 @@ config BR2_PACKAGE_PETITBOOT_GETTY_PORT
 	  Specify a space-separated list of ports to run the petitboot
 	  UI on. Wildcards are allowed. Example: "hvc* ttys0 ttyS*"
 
+config BR2_PACKAGE_PETITBOOT_MTD
+	bool "petitboot-mtd"
+	select BR2_PACKAGE_LIBFLASH
+	select BR2_PACKAGE_PFLASH
+	help
+	  Adds Petitboot support for MTD devices
+
 endif # BR2_PACKAGE_PETITBOOT
 
 comment "petitboot needs a toolchain w/ wchar, dynamic library, threads, udev /dev management"

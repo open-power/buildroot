@@ -23,7 +23,6 @@ PETITBOOT_CONF_ENV = LDFLAGS="$(TARGET_LDFLAGS) $(TARGET_NLS_LIBS)"
 PETITBOOT_CONF_OPTS = \
 	--enable-crypt \
 	--enable-platform-auto \
-	--disable-mtd \
 	--with-ncurses \
 	--without-signed-boot \
 	--without-twin-fbdev \
@@ -32,6 +31,13 @@ PETITBOOT_CONF_OPTS = \
 	HOST_PROG_KEXEC=/usr/sbin/kexec \
 	HOST_PROG_SH=/usr/libexec/petitboot/pb-shell \
 	HOST_PROG_SHUTDOWN=/usr/libexec/petitboot/kexec-restart
+
+ifeq ($(BR2_PACKAGE_PETITBOOT_MTD),y)
+PETITBOOT_CONF_OPTS += --enable-mtd
+PETITBOOT_DEPENDENCIES += libflash
+PETITBOOT_CPPFLAGS += -I$(STAGING_DIR)
+PETITBOOT_LDFLAGS += -L$(STAGING_DIR)
+endif
 
 # HPA and Busybox tftp are supported. HPA tftp is part of Buildroot's tftpd
 # package.
