@@ -4,8 +4,9 @@
 #
 ################################################################################
 
-# Please keep in sync with package/gettext-gnu/gettext-gnu.mk
-LIBTEXTSTYLE_VERSION = 0.20.1
+# Please keep in sync with package/gettext-gnu/gettext-gnu.mk and
+# GETTEXT_TINY_ARCHIVE_VERSION in gettext-tiny/gettext-tiny.mk
+LIBTEXTSTYLE_VERSION = 0.22
 LIBTEXTSTYLE_SITE = $(BR2_GNU_MIRROR)/gettext
 LIBTEXTSTYLE_SOURCE = gettext-$(LIBTEXTSTYLE_VERSION).tar.xz
 LIBTEXTSTYLE_INSTALL_STAGING = YES
