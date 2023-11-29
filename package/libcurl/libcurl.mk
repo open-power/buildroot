@@ -181,7 +181,7 @@ endef
 LIBCURL_POST_INSTALL_TARGET_HOOKS += LIBCURL_TARGET_CLEANUP
 endif
 
-HOST_LIBCURL_DEPENDENCIES = host-openssl
+HOST_LIBCURL_DEPENDENCIES = host-openssl host-libssh2
 HOST_LIBCURL_CONF_OPTS = \
 	--disable-manual \
 	--disable-ntlm-wb \
@@ -189,7 +189,8 @@ HOST_LIBCURL_CONF_OPTS = \
 	--with-ssl \
 	--without-gnutls \
 	--without-mbedtls \
-	--without-nss
+	--without-nss \
+	--with-libssh2
 
 HOST_LIBCURL_POST_PATCH_HOOKS += LIBCURL_FIX_DOT_PC
 
