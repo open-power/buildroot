@@ -5,7 +5,7 @@
 ################################################################################
 
 LINUX_FIRMWARE_VERSION = 65b1c68c63f974d72610db38dfae49861117cae2
-LINUX_FIRMWARE_SITE = http://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+LINUX_FIRMWARE_SITE = https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 LINUX_FIRMWARE_SITE_METHOD = git
 
 # Intel SST DSP
