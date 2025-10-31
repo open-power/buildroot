@@ -5,7 +5,7 @@
 ################################################################################
 
 POPT_VERSION = 1.16
-POPT_SITE = http://rpm5.org/files/popt
+POPT_SITE = https://ftp.osuosl.org/pub/rpm/popt/releases/popt-1.x
 POPT_INSTALL_STAGING = YES
 POPT_LICENSE = MIT
 POPT_LICENSE_FILES = COPYING
