@@ -5,7 +5,7 @@
 ################################################################################
 
 LIBXML2_VERSION = 2.9.12
-LIBXML2_SITE = https://xmlsoft.org/sources
+LIBXML2_SITE = https://ftp.gnome.org/pub/gnome/sources/libxml2
 LIBXML2_INSTALL_STAGING = YES
 LIBXML2_LICENSE = MIT
 LIBXML2_LICENSE_FILES = COPYING
