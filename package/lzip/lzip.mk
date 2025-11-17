@@ -5,7 +5,7 @@
 ################################################################################
 
 LZIP_VERSION = 1.20
-LZIP_SITE = http://download.savannah.gnu.org/releases/lzip
+LZIP_SITE = https://download.savannah.gnu.org/releases/lzip
 LZIP_LICENSE = GPL-2.0+
 LZIP_LICENSE_FILES = COPYING
 
