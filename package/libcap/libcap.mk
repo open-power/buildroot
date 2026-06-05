@@ -11,6 +11,9 @@ LIBCAP_LICENSE = GPL-2.0 or BSD-3-Clause
 LIBCAP_LICENSE_FILES = License
 LIBCAP_CPE_ID_VALID = YES
 
+# 0001-Address-a-potential-TOCTOU-race-condition-in-cap-set-file.patch
+LIBCAP_IGNORE_CVES += CVE-2026-4878
+
 LIBCAP_DEPENDENCIES = host-gperf
 LIBCAP_INSTALL_STAGING = YES
 
@@ -64,8 +67,11 @@ define HOST_LIBCAP_BUILD_CMDS
 		$(HOST_LIBCAP_MAKE_FLAGS)
 endef
 
+# Set DESTDIR to a non-empty path, so that libcap's Makefile
+# does not trigger calls to ldconfig
 define HOST_LIBCAP_INSTALL_CMDS
-	$(HOST_MAKE_ENV) $(MAKE) -C $(@D) $(HOST_LIBCAP_MAKE_FLAGS) install
+	$(HOST_MAKE_ENV) $(MAKE) -C $(@D) $(HOST_LIBCAP_MAKE_FLAGS) \
+		DESTDIR=/ install
 endef
 
 $(eval $(generic-package))

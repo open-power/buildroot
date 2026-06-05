@@ -728,7 +728,7 @@ ifeq ($$($(2)_CPE_ID_VALID),YES)
   ifdef $(3)_CPE_ID_UPDATE
    $(2)_CPE_ID_UPDATE = $$($(3)_CPE_ID_UPDATE)
   else
-   $(2)_CPE_ID_UPDATE = *
+   $(2)_CPE_ID_UPDATE = -
   endif
  endif
 
@@ -1268,7 +1268,7 @@ else ifeq ($$($(2)_SITE_METHOD),hg)
 DL_TOOLS_DEPENDENCIES += hg
 else ifeq ($$($(2)_SITE_METHOD),cvs)
 DL_TOOLS_DEPENDENCIES += cvs
-else ifneq ($(filter ftp ftps,$$($(2)_SITE_METHOD)),)
+else ifneq ($(filter ftp ftps smb,$$($(2)_SITE_METHOD)),)
 DL_TOOLS_DEPENDENCIES += curl
 endif # SITE_METHOD
 

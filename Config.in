@@ -15,6 +15,10 @@ config BR2_HAVE_DOT_CONFIG
 config BR2_BROKEN
 	bool
 
+config BR2_HIDE_SECONDARY_TARGET_OPTIONS
+	bool
+	option env="BR2_HIDE_SECONDARY_TARGET_OPTIONS"
+
 config BR2_VERSION
 	string
 	option env="BR2_VERSION_FULL"
@@ -73,6 +77,26 @@ config BR2_HOST_GCC_AT_LEAST_11
 	bool
 	default y if BR2_HOST_GCC_VERSION = "11"
 	select BR2_HOST_GCC_AT_LEAST_10
+
+config BR2_HOST_GCC_AT_LEAST_12
+	bool
+	default y if BR2_HOST_GCC_VERSION = "12"
+	select BR2_HOST_GCC_AT_LEAST_11
+
+config BR2_HOST_GCC_AT_LEAST_13
+	bool
+	default y if BR2_HOST_GCC_VERSION = "13"
+	select BR2_HOST_GCC_AT_LEAST_12
+
+config BR2_HOST_GCC_AT_LEAST_14
+	bool
+	default y if BR2_HOST_GCC_VERSION = "14"
+	select BR2_HOST_GCC_AT_LEAST_13
+
+config BR2_HOST_GCC_AT_LEAST_15
+	bool
+	default y if BR2_HOST_GCC_VERSION = "15"
+	select BR2_HOST_GCC_AT_LEAST_14
 
 # When adding new entries above, be sure to update
 # the HOSTCC_MAX_VERSION variable in the Makefile.

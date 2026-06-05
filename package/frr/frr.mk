@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-FRR_VERSION = 9.1.3
+FRR_VERSION = 10.3
 FRR_SITE = $(call github,FRRouting,frr,frr-$(FRR_VERSION))
 FRR_LICENSE = GPL-2.0+
 FRR_LICENSE_FILES = \
@@ -20,8 +20,8 @@ FRR_LICENSE_FILES = \
 # tools/gcc-plugins/frr-format.[ch] is not enabled by frr's ./configure, so gcc's
 # GPLv3 does not apply
 #	doc/licenses/GPL-3.0
-FRR_CPE_ID_VENDOR = linuxfoundation
-FRR_CPE_ID_PRODUCT = free_range_routing
+FRR_CPE_ID_VENDOR = frrouting
+FRR_CPE_ID_PRODUCT = frrouting
 FRR_AUTORECONF = YES
 
 FRR_DEPENDENCIES = host-frr readline json-c libyang \
@@ -38,14 +38,11 @@ FRR_CONF_ENV = \
 # Do not enable -fplugin=frr-format for production, see doc/developer/workflow.rst,
 # it is only intended for FRR's developments
 FRR_CONF_OPTS = --with-clippy=$(HOST_DIR)/bin/clippy \
-	--sysconfdir=/etc/frr \
-	--localstatedir=/var/run/frr \
 	--with-moduledir=/usr/lib/frr/modules \
 	--enable-configfile-mask=0640 \
 	--enable-logfile-mask=0640 \
 	--enable-multipath=256 \
 	--disable-ospfclient \
-	--enable-shell-access \
 	--enable-user=frr \
 	--enable-group=frr \
 	--enable-vty-group=frrvty \
@@ -86,6 +83,12 @@ else
 FRR_CONF_OPTS += --disable-zeromq
 endif
 
+ifeq ($(BR2_PACKAGE_FRR_BFD),y)
+FRR_CONF_OPTS += --enable-bfdd
+else
+FRR_CONF_OPTS += --disable-bfdd
+endif
+
 ifeq ($(BR2_TOOLCHAIN_HAS_LIBATOMIC),y)
 FRR_CONF_ENV += LIBS=-latomic
 endif
@@ -118,6 +121,13 @@ endef
 define FRR_INSTALL_INIT_SYSV
 	$(INSTALL) -D -m 755 $(FRR_PKGDIR)/S50frr \
 		$(TARGET_DIR)/etc/init.d/S50frr
+endef
+
+define FRR_INSTALL_INIT_SYSTEMD
+	$(INSTALL) -D -m 644 $(@D)/tools/frr.service \
+		$(TARGET_DIR)/usr/lib/systemd/system/frr.service
+	$(INSTALL) -D -m 644 $(@D)/tools/frr@.service \
+		$(TARGET_DIR)/usr/lib/systemd/system/frr@.service
 endef
 
 $(eval $(autotools-package))
